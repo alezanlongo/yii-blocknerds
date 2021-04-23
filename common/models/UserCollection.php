@@ -2,7 +2,9 @@
 
 namespace common\models;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%user_collection}}".
@@ -15,21 +17,29 @@ use Yii;
  *
  * @property User $user
  */
-class UserCollection extends \yii\db\ActiveRecord
+class UserCollection extends ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%user_collection}}';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function behaviors() {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules() {
         return [
             [['user_id', 'created_at', 'updated_at'], 'required'],
             [['user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
@@ -42,8 +52,7 @@ class UserCollection extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
@@ -56,10 +65,9 @@ class UserCollection extends \yii\db\ActiveRecord
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return ActiveQuery|UserQuery
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
@@ -67,8 +75,8 @@ class UserCollection extends \yii\db\ActiveRecord
      * {@inheritdoc}
      * @return UsersCollectionsQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new UsersCollectionsQuery(get_called_class());
     }
+
 }

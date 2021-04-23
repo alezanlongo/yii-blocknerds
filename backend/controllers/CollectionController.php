@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use app\models\UserCollectionForm;
+use common\models\User;
 use common\models\UserCollection;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -70,14 +72,15 @@ class CollectionController extends Controller
      * @return mixed
      */
     public function actionCreate() {
-        $model = new UserCollection();
+        $model = User::findIdentity(Yii::$app->getUser()->getId());
+        $modelCollectionForm = new UserCollectionForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->createCollection($model)) {
+            return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
         }
 
         return $this->render('create', [
-                    'model' => $model,
+                    'model' => $modelCollectionForm,
         ]);
     }
 
@@ -90,13 +93,13 @@ class CollectionController extends Controller
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $modelCollectionForm = new UserCollectionForm($model);
+        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->updateCollection()) {
+            return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
         }
 
         return $this->render('update', [
-                    'model' => $model,
+                    'model' => $modelCollectionForm,
         ]);
     }
 
