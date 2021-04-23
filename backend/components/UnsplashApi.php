@@ -28,7 +28,7 @@ class UnsplashApi extends Component
      * @throws Exception includes httpclient errors messages
      */
     public function search(string $keyword, int $page = 1, string $clientId = 'cKakzKM1cx44BUYBnEIrrgN_gnGqt81UcE7GstJEils') {
-        $uri = ['query' => $keyword, 'client_id' => $clientId, 'per_page' => 20, 'orientation' => 'portrait', 'page' => $page];
+        $uri = ['query' => $keyword, 'client_id' => $clientId, 'per_page' => 10, 'orientation' => 'portrait', 'page' => $page];
         try {
             $res = $this->getHttpClient()->get('search/photos?' . http_build_query($uri))->send();
         } catch (HttpClientException $ex) {
@@ -36,10 +36,26 @@ class UnsplashApi extends Component
             throw new Exception('Internal error');
         }
         if (!$res->isOk) {
-            $errorMessage = join('/ ', $res->getData()['errors'] ?? ['Unspecified error']);
+            $errorMessage = join(' / ', $res->getData()['errors'] ?? ['Unspecified error']);
             throw new Exception($errorMessage);
         }
         return $res->getData();
+    }
+
+    /**
+     * Remove unnecessary keys from searchResults
+     * @param array $results
+     * @return array
+     */
+    public function reduceSearchResult(array $results) {
+        foreach ($results['results'] as $k => $v) {
+            $results['results'][$k] = [
+                'id' => $v['id'],
+                'thumb' => $v['urls']['thumb'],
+                'img' => $v['urls']['regular']
+            ];
+        }
+        return $results;
     }
 
     /**

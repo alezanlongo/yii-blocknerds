@@ -13,8 +13,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'collection')->textInput() ?>
+    <?= $form->field($model, 'collection')->hiddenInput() ?>
+    <div class="form-group">
+        <ul class="thumbnails selected" id="imgp-selected">
+        </ul>
+    </div>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 

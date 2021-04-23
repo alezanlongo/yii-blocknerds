@@ -2,14 +2,15 @@
 
 namespace backend\controllers;
 
-use app\models\UserCollectionSearch;
 use common\models\UserCollection;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * CollectionController implements the CRUD actions for UserCollection model.
@@ -45,16 +46,8 @@ class CollectionController extends Controller
      * @return mixed
      */
     public function actionIndex() {
-//        $searchModel = new UserCollectionSearch();
-        //$res = UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId())->all();
-        //var_dump($res);
-        //die;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        //Yii::$app->unsplashApi->search('fire');
-        //var_dump(Yii::$app->unsplashApi->search('fire'));
-        //echo Yii::$app->user->id;
+        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search('cat'));
         return $this->render('index', [
-//                    'searchModel' => new UsersCollectionsQuery(UserCollection::class),
                     'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId()), 'pagination' => ['pageSize' => 20]]),
         ]);
     }
@@ -105,6 +98,22 @@ class CollectionController extends Controller
         return $this->render('update', [
                     'model' => $model,
         ]);
+    }
+
+    /**
+     * Receive and retrieve through AJAX unsplash search results
+     * @return Response
+     * @throws BadRequestHttpException
+     */
+    public function actionLookup() {
+        if (!$this->request->isAjax || !$this->request->isPost) {
+            throw new BadRequestHttpException("bad request");
+        }
+        $kwd = $this->request->post()['keyword'] ?? '';
+        $this->response->format = Response::FORMAT_JSON;
+        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search($kwd));
+        $this->response->data = ['img' => $imgRes];
+        return $this->response;
     }
 
     /**
