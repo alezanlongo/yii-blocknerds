@@ -7,7 +7,7 @@ use yii\web\View;
 
 $this->title = 'My Yii Application';
 $this->registerJs(<<<JS
-            let isDownloading = false;
+            var isDownloading = false;
             $(".download-collection").on("click",function(e){
             e.preventDefault()
             let id = e.currentTarget.id.match(/^collection\-([0-9]+)/)[1]
