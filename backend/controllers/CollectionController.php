@@ -48,7 +48,6 @@ class CollectionController extends Controller
      * @return mixed
      */
     public function actionIndex() {
-        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search('cat'));
         return $this->render('index', [
                     'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId()), 'pagination' => ['pageSize' => 20]]),
         ]);
