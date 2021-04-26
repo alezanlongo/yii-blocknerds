@@ -7,6 +7,13 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'pgsql:host=pgsql;dbname=test',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+        ],
         'redis' => [
             'class' => 'yii\redis\Connection',
             'hostname' => 'redis',
@@ -30,6 +37,5 @@ return [
                 'database' => 0,
             ],
         ],
-
     ]
 ];
