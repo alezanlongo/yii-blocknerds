@@ -78,16 +78,7 @@ class SiteController extends Controller
             if ($fileToken === false) {
                 return new BadRequestHttpException('invalid token');
             }
-            $ctype = "application/pdf";
-            header("Pragma: public");
-            header("Content-Type: application/$ctype");
-            header("Content-Disposition: inline; filename={$fileToken['filename']}");
-            header('Content-Length: ' . filesize($fileToken['file']));
-            header("Accept Ranges: bytes");
-            header("Expires: 0");
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            readfile("{$fileToken['file']}");
-            return;
+            return Yii::$app->response->sendFile($fileToken['file'], $fileToken['filename']);
         }
 
         if (!$this->request->isAjax || !$this->request->isGet) {
