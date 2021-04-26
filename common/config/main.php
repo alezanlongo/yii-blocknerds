@@ -7,19 +7,29 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'redis' => [
+            'class' => 'yii\redis\Connection',
+            'hostname' => 'redis',
+            'port' => 6379,
+            'database' => 0,
+        ],
         'cache' => [
             'class' => 'yii\redis\Cache',
+//            //'class' => 'yii\caching\FileCache',
             'redis' => [
                 'hostname' => 'redis',
                 'port' => 6379,
                 'database' => 0,
             ],
-//        'cache' => [
-//            //'class' => 'yii\caching\FileCache',
-//            'class' => 'yii\redis\Cache',
         ],
-        'unsplashApi' => [
-            'class' => 'app\components\UnsplashApi',
+        'session' => [
+            'class' => 'yii\redis\Session',
+            'redis' => [
+                'hostname' => 'redis',
+                'port' => 6379,
+                'database' => 0,
+            ],
         ],
+
     ]
 ];

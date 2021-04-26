@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1926100398f5b8f49ca4b077b0c4cde",
+    "content-hash": "6be877b170df67a3ac395dfd1ad9f759",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -166,6 +166,71 @@
                 "source": "https://github.com/cebe/markdown"
             },
             "time": "2020-02-26T01:55:18+00:00"
+        },
+        {
+            "name": "coderius/yii2-swiper-slider",
+            "version": "1.0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderius/yii2-swiper-slider.git",
+                "reference": "ec513a71c5b038682de09dfc97ddb6b14b57eb1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderius/yii2-swiper-slider/zipball/ec513a71c5b038682de09dfc97ddb6b14b57eb1c",
+                "reference": "ec513a71c5b038682de09dfc97ddb6b14b57eb1c",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/swiper": "^6",
+                "php": ">=5.6.0",
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "4.8.27|^5.0|^6.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                },
+                "asset-vcs-driver-options": {
+                    "github-no-api": true
+                },
+                "asset-pattern-skip-version": "(-patch)"
+            },
+            "autoload": {
+                "psr-4": {
+                    "coderius\\swiperslider\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serg Coderius",
+                    "email": "sunrise4fun@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "yii2 swiper slider",
+            "keywords": [
+                "Yii2 Extension",
+                "slider",
+                "swiper",
+                "yii2",
+                "yii2 modules",
+                "yii2 slider"
+            ],
+            "support": {
+                "issues": "https://github.com/coderius/yii2-swiper-slider/issues",
+                "source": "https://github.com/coderius/yii2-swiper-slider/tree/1.0.0.1"
+            },
+            "time": "2020-11-04T20:12:35+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -364,6 +429,49 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/master"
             },
             "time": "2020-06-29T00:56:53+00:00"
+        },
+        {
+            "name": "npm-asset/dom7",
+            "version": "3.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/dom7/-/dom7-3.0.0.tgz"
+            },
+            "require": {
+                "npm-asset/ssr-window": ">=3.0.0-alpha.1,<4.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/ssr-window",
+            "version": "3.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/ssr-window/-/ssr-window-3.0.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/swiper",
+            "version": "6.5.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/swiper/-/swiper-6.5.4.tgz"
+            },
+            "require": {
+                "npm-asset/dom7": ">=3.0.0,<4.0.0",
+                "npm-asset/ssr-window": ">=3.0.0,<4.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1229,6 +1337,81 @@
                 }
             ],
             "time": "2020-12-23T16:52:38+00:00"
+        },
+        {
+            "name": "yiisoft/yii2-redis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-redis.git",
+                "reference": "13b518e4f5f880b47bac33d5a15cfa049c689437"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-redis/zipball/13b518e4f5f880b47bac33d5a15cfa049c689437",
+                "reference": "13b518e4f5f880b47bac33d5a15cfa049c689437",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "yiisoft/yii2": "~2.0.39"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "<7",
+                "yiisoft/yii2-dev": "~2.0.39"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\redis\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "cache",
+                "redis",
+                "session",
+                "yii2"
+            ],
+            "support": {
+                "forum": "http://www.yiiframework.com/forum/",
+                "irc": "irc://irc.freenode.net/yii",
+                "issues": "https://github.com/yiisoft/yii2-redis/issues",
+                "source": "https://github.com/yiisoft/yii2-redis",
+                "wiki": "http://www.yiiframework.com/wiki/"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii2-redis",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-03-18T13:06:28+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -5431,7 +5614,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "yiisoft/yii2-redis": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

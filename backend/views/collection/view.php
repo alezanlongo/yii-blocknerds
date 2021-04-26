@@ -17,23 +17,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?=
+        Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'collection',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    if($data->collection===null){return 'No images selected';};
+                    $thumbs='';
+                    foreach ($data->collection as $v){$thumbs.="<li><img src=\"{$v['thumb']}\"></li>";}
+                    return '<ul class="widgetview">'.$thumbs.'</ul>';
+                }
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

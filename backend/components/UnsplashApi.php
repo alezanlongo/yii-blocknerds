@@ -27,7 +27,7 @@ class UnsplashApi extends Component
      * @return array
      * @throws Exception includes httpclient errors messages
      */
-    public function search(string $keyword, int $page = 1, string $clientId = 'cKakzKM1cx44BUYBnEIrrgN_gnGqt81UcE7GstJEils') {
+    public function search(string $keyword, int $page = 1, string $clientId = 'cKakzKM1cx44BUYBnEIrrgN_gnGqt81UcE7GstJEils'): array {
         $uri = ['query' => $keyword, 'client_id' => $clientId, 'per_page' => 10, 'orientation' => 'portrait', 'page' => $page];
         try {
             $res = $this->getHttpClient()->get('search/photos?' . http_build_query($uri))->send();
@@ -47,7 +47,7 @@ class UnsplashApi extends Component
      * @param array $results
      * @return array
      */
-    public function reduceSearchResult(array $results) {
+    public function reduceSearchResult(array $results): array {
         foreach ($results['results'] as $k => $v) {
             $results['results'][$k] = [
                 'id' => $v['id'],
@@ -62,7 +62,7 @@ class UnsplashApi extends Component
      * Get Yii2-httpclient
      * @return Client
      */
-    public function getHttpClient() {
+    public function getHttpClient(): Client {
         if (null === $this->_httpClient) {
             $this->_httpClient = Yii::createObject([
                         'class' => Client::class,

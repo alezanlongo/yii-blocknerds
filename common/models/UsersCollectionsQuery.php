@@ -29,6 +29,16 @@ class UsersCollectionsQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * Get a collection by collection id and user id
+     * @param int $userId
+     * @param type $collectionId
+     * @return $this
+     */
+    public function getUserCollectionById(int $userId, $collectionId) {
+        return $this->where(['user_id' => $userId])->andWhere(['id' => $collectionId]);
+    }
+
+    /**
      * {@inheritdoc}
      * @return UserCollection[]|array
      */
