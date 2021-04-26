@@ -18,7 +18,7 @@ $this->registerJs(<<<JS
             'url:"' . Url::to(['site/download']) . '/?id="+id,' .
             'success: function(res){isDownloading=false;location.href="'. Url::to(['site/download']) . '?id="+id+"&token="+res.download_token+"";},'.
             <<<JS
-             error: function(res){isDownloading = false; alert('error: '+err.responseText)}
+             error: function(err){isDownloading = false; alert('error: '+err.responseText)}
             })
             //alert(isDownloading)
         })

@@ -51,7 +51,7 @@ class CollectionsUtils
         $type = exif_imagetype($filename);
         $k = array_search($type, array_keys($allowed));
         if ($k !== false) {
-            return $allowed[$k];
+            return $allowed[$type];
         }
         return false;
     }
