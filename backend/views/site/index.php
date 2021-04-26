@@ -16,8 +16,9 @@ $this->registerJs(<<<JS
             $.ajax({
             JS .
             'url:"' . Url::to(['site/download']) . '/?id="+id,' .
-            'success: function(res){console.log(res); location.href="'. Url::to(['site/download']) . '?id="+id+"&token="+res.download_token+"";},'.
+            'success: function(res){isDownloading=false;location.href="'. Url::to(['site/download']) . '?id="+id+"&token="+res.download_token+"";},'.
             <<<JS
+             error: function(res){isDownloading = false; alert('error: '+err.responseText)}
             })
             //alert(isDownloading)
         })
