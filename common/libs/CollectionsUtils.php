@@ -1,6 +1,6 @@
 <?php
 
-namespace app\libs;
+namespace common\libs;
 
 use DateTime;
 use yii\web\Session;
@@ -27,34 +27,12 @@ class CollectionsUtils
         $zip = new ZipArchive();
         $zip->open($zipFile, ZipArchive::CREATE);
         foreach ($imagesArr as $k => $file) {
-            $tmpFilename = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filenamePrefix . rand(1, 1000) . "_{$k}_" . '.tmp';
-            if (!copy($file, $tmpFilename)) {
-                return false;
-            }
-            $ext = self::guessFileExt($tmpFilename);
-            if ($ext === false) {
-                return false;
-            }
-            $zip->addFile($tmpFilename, ($k + 1) . '.' . $ext);
+            $zip->addFile($file, ($k + 1) . '_' . substr($file, strrpos($file, '/') + 1));
         }
         $zip->close();
         return ['filename' => $zipFilename, 'file' => $zipFile];
     }
 
-    /**
-     * Guess file extension
-     * @param type $filename
-     * @return boolean|string
-     */
-    static public function guessFileExt($filename) {
-        $allowed = [IMAGETYPE_PNG => 'png', IMAGETYPE_JPEG => 'jpg', IMAGETYPE_GIF => 'gif'];
-        $type = exif_imagetype($filename);
-        $k = array_search($type, array_keys($allowed));
-        if ($k !== false) {
-            return $allowed[$type];
-        }
-        return false;
-    }
 
     /**
      * 

@@ -21,6 +21,9 @@ Thumbs.db
 /vendor
 vendor/
 
+#imageStorage
+/common/imageStorage/
+
 # composer itself is not needed
 composer.phar
 

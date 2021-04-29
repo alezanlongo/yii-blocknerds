@@ -77,13 +77,14 @@ $this->registerJs(<<<JS
             }
         }
         function createLiElement(obj){
-           return '<li data-obj=\''+JSON.stringify(obj.id).replace(/'/g, "\\'")+'\' class="thumbnail"><img src="'+obj.thumb+'" />';
+           return '<li data-obj=\''+JSON.stringify(obj).replace(/'/g, "\\'")+'\' class="thumbnail"><img src="'+obj.thumb+'" />';
         }
         
         $(document).ready(function(){
             if($("#$collectionFieldId").val()==''){
                 return;
             }
+        
             let data = JSON.parse($("#$collectionFieldId").val());
             for(let r of data){
               $("#imgp-selected").append(createLiElement(r))

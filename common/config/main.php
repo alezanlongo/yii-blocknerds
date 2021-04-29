@@ -50,5 +50,11 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => false,
         ],
+        'unsplashApi' => [
+            'class' => '\common\components\UnsplashApi',
+        ],
+        'imageStorage' => [
+            'class' => '\common\components\ImageStorage',
+        ],
     ]
 ];

@@ -44,9 +44,7 @@ return [
             'rules' => [
             ],
         ],
-        'unsplashApi' => [
-            'class' => 'app\components\UnsplashApi',
-        ],
+
     ],
     'params' => $params,
 ];

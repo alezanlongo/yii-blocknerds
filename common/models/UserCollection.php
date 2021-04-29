@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $user_id
- * @property string|null $collection
+ * @property string|null $name
  * @property int $created_at
  * @property int $updated_at
  *
@@ -41,10 +41,9 @@ class UserCollection extends ActiveRecord
      */
     public function rules() {
         return [
-            [['user_id', 'created_at', 'updated_at'], 'required'],
-            [['user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['user_id', 'name', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'name', 'created_at', 'updated_at'], 'default', 'value' => null],
             [['user_id', 'created_at', 'updated_at'], 'integer'],
-            [['collection'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -55,8 +54,8 @@ class UserCollection extends ActiveRecord
     public function attributeLabels() {
         return [
             'id' => 'ID',
+            'name' => 'Collection name',
             'user_id' => 'User ID',
-            'collection' => 'Collection',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -69,6 +68,10 @@ class UserCollection extends ActiveRecord
      */
     public function getUser() {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getUserCollectionImage() {
+        return $this->hasMany(\common\models\UserCollectionImage::class, ['usercollection_id' => 'id']);
     }
 
     /**
