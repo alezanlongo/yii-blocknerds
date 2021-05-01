@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model \app\models\UserCollectionForm */
@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="user-collection-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'collection')->hiddenInput() ?>
+    <?= $form->field($model, 'collection')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'name')->textInput() ?>
     <div class="form-group">
         <ul class="thumbnails selected" id="imgp-selected">

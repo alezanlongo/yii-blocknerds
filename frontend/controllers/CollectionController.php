@@ -113,7 +113,7 @@ class CollectionController extends Controller
         }
         $kwd = $this->request->post()['keyword'] ?? '';
         $this->response->format = Response::FORMAT_JSON;
-        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search($kwd));
+        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search($kwd), ['alt_description']);
         $this->response->data = ['img' => $imgRes];
         return $this->response;
     }
@@ -129,6 +129,23 @@ class CollectionController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function beforeAction($action): bool {
+        if ($action->actionMethod === 'actionLookup') {
+            $dt = new \DateTime();
+            Yii::info("action method '{$action->actionMethod}' start: {$dt->format('Y-m-d H:i:s')}", 'unsplashSearch');
+        }
+        return parent::beforeAction($action);
+    }
+
+    public function afterAction($action, $result) {
+        if ($action->actionMethod === 'actionLookup') {
+            $dt = new \DateTime();
+            Yii::info("action method '{$action->actionMethod}' end: {$dt->format('Y-m-d H:i:s')}", 'unsplashSearch');
+        }
+
+        return parent::afterAction($action, $result);
     }
 
     /**

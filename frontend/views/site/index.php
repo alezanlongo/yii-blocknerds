@@ -1,6 +1,5 @@
 <?php
 
-use coderius\swiperslider\SwiperSlider;
 use yii\helpers\Url;
 use yii\web\View;
 
@@ -25,7 +24,6 @@ $this->registerJs(<<<JS
         })
         
         JS, View::POS_READY);
-yii\helpers\VarDumper::dump($this,  $dept = 10,  $highlight = true);
 ?>
 
 <div class="site-index">
@@ -36,6 +34,7 @@ yii\helpers\VarDumper::dump($this,  $dept = 10,  $highlight = true);
     </div>
     <div class="body-content">
         <div class="row">
+
             <?php
             if (!empty($collections)):
                 foreach ($collections as $vCollection):
@@ -44,18 +43,18 @@ yii\helpers\VarDumper::dump($this,  $dept = 10,  $highlight = true);
                         <?php
                         $images = [];
                         foreach ($vCollection->getUserCollectionImage()->all() as $vImages) {
-                            $images[] = '<div style="text-align:center; background-color:#000"><img src="/userimages/' . $vImages['image_file'] . '" /></div>';
+//                            $images[] = '<div style="text-align:center; background-color:#000"><img src="/userimages/' . $vImages['image_file'] . '" /></div>';
+                            $images[] = "/userimages/{$vImages['image_file']}";
                         }
-                        echo SwiperSlider::widget([
-                            'slides' => $images]);
+                        echo common\widgets\imageSlider\ImageSlider::widget(['images' => $images]);
                         ?>
                         <br />
                         <p><a class="btn btn-default download-collection" id="collection-<?= $vCollection['id'] ?>" href="#">Download collection &raquo;</a></p>
                     </div>
-                    <?php
-                endforeach;
-            endif;
-            ?>
+        <?php
+    endforeach;
+endif;
+?>
         </div>
     </div>
 </div>

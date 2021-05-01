@@ -15,6 +15,14 @@ class UsersCollectionsQuery extends \yii\db\ActiveQuery
       } */
 
     /**
+     * Get ullection from active Users
+     * @return $this
+     */
+    public function getUserActiveCollection() {
+        return $this->joinWith('user u', true, 'INNER JOIN')->where(['u.status' => User::STATUS_ACTIVE]);
+    }
+
+    /**
      * Get User collections by id
      * @param int $userId
      * @param int $offset

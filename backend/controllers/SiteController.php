@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\libs\CollectionsUtils;
 use common\models\LoginForm;
+use common\models\User;
 use common\models\UserCollection;
 use Yii;
 use yii\filters\AccessControl;
@@ -34,6 +35,9 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index', 'download'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return Yii::$app->user->identity->role == User::ROLE_ADMIN;
+                        }
                     ],
                 ],
             ],
@@ -112,7 +116,7 @@ class SiteController extends Controller
      */
     public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('site/login');
         }
 
         $this->layout = 'blank';

@@ -12,6 +12,7 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property string $role
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
@@ -29,6 +30,12 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    /**
+     * roles
+     */
+    const ROLE_USER = 10;
+    const ROLE_ADMIN = 100;
 
     /**
      * {@inheritdoc}
@@ -53,6 +60,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['role', 'default', 'value' => self::ROLE_USER],
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN]]
         ];
     }
 
@@ -60,7 +69,7 @@ class User extends ActiveRecord implements IdentityInterface
      * {@inheritdoc}
      */
     public static function findIdentity($id) {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->cache(60)->where(['id' => $id, 'status' => self::STATUS_ACTIVE])->one();
     }
 
     /**
@@ -196,6 +205,15 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getUserCollection() {
         return $this->hasMany(UserCollection::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Get user role
+     * @param int $id
+     * @return string|null
+     */
+    public function getRole($id): string {
+        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE])->role;
     }
 
 }

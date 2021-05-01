@@ -1,0 +1,77 @@
+/* 
+    Author     : Alejandro Zanlongo <azanlongo at gmail.com>
+*/
+
+.image-slider{
+    width: 350px;
+    height: 500px;
+    background-color: #002752;
+}
+
+.image-slider .nav{
+    width: 50px;
+    height: 50px;
+    margin-top: 200px;
+    font-family: monospace;
+    font-size: 2em;
+    font-weight: 800;
+    color: #fff;
+    position: absolute;
+    background-color: #000;
+    opacity: 0.7;
+    text-indent: 5px;
+    
+
+}
+.image-slider .nav.l{
+    float: left;
+
+}
+
+.image-slider .nav.r{
+    float: right;
+
+}
+
+
+ul.image-slider {
+    overflow: hidden;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px; 
+
+}
+ul.image-slider li {
+    margin: 0px 12px 12px 0px;
+    overflow: hidden;
+    width: 200px;
+    height: 389px;
+    float: left; 
+
+}
+ul.image-slider li img{
+    width: 198px;
+    height: 253px;
+}
+ul.image-slider li:hover{cursor:pointer;}
+ul.image-slider li {
+    padding: 6px;}
+
+ul.image-slider li img {
+    width: 200px;
+    height: 389px;
+    -webkit-user-drag: none; }
+ul.image-slider li .card:hover {
+    border-color: #08C; }
+ul.image-slider li .card .card-text {
+    padding: 0 10px 0 10px; }
+
+ul.image-slider li .card{height:387px; overflow:hidden}
+ul.image-slider.selected {
+    background-color: #f5f5f5;
+    border: 1px #e3e3e3;
+    min-height: 200px;
+    padding: 10px;
+}

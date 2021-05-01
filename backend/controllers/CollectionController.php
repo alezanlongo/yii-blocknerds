@@ -49,7 +49,7 @@ class CollectionController extends Controller
      */
     public function actionIndex() {
         return $this->render('index', [
-                    'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId()), 'pagination' => ['pageSize' => 20]]),
+                    'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getUserActiveCollection(), 'pagination' => ['pageSize' => 20]]),
         ]);
     }
 

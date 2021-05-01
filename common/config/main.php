@@ -8,11 +8,15 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'db' => [
-            'class' => 'yii\db\Connection',
+            'class' => 'yii\redis\Connection',
             'dsn' => 'pgsql:host=pgsql;dbname=test',
             'username' => 'root',
             'password' => 'root',
             'charset' => 'utf8',
+            'enableSchemaCache' => true,
+            'schemaCacheDuration' => 3600,
+            'enableQueryCache' => true,
+            'queryCacheDuration' => 3600,
         ],
         'redis' => [
             'class' => 'yii\redis\Connection',
@@ -26,7 +30,7 @@ return [
             'redis' => [
                 'hostname' => 'redis',
                 'port' => 6379,
-                'database' => 0,
+                'database' => 1,
             ],
         ],
         'session' => [
@@ -34,7 +38,7 @@ return [
             'redis' => [
                 'hostname' => 'redis',
                 'port' => 6379,
-                'database' => 0,
+                'database' => 2,
             ],
         ],
         'mailer' => [
@@ -51,10 +55,10 @@ return [
             'useFileTransport' => false,
         ],
         'unsplashApi' => [
-            'class' => '\common\components\UnsplashApi',
+            'class' => '\common\components\UnsplashApiComponent',
         ],
         'imageStorage' => [
-            'class' => '\common\components\ImageStorage',
+            'class' => '\common\components\ImageStorageComponent',
         ],
     ]
 ];

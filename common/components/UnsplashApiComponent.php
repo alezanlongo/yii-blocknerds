@@ -13,7 +13,7 @@ use yii\httpclient\Exception as HttpClientException;
  *
  * @author Alejandro Zanlongo <azanlongo at gmail.com>
  */
-class UnsplashApi extends Component
+class UnsplashApiComponent extends Component
 {
 
     private $_baseUrl = 'https://api.unsplash.com/';
@@ -89,5 +89,7 @@ class UnsplashApi extends Component
         }
         return $this->_httpClient;
     }
+    
+    
 
 }

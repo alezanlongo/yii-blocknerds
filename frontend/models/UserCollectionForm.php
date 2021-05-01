@@ -2,13 +2,14 @@
 
 namespace app\models;
 
-use common\components\ImageStorage;
+use common\components\ImageStorageComponent;
 use common\models\User;
 use common\models\UserCollection;
 use common\models\UserCollectionImage;
 use Yii;
 use yii\base\Model;
 use yii\httpclient\Exception;
+use function mb_substr;
 
 /**
  * Description of UserCollectionForm
@@ -34,7 +35,7 @@ class UserCollectionForm extends Model
             $this->name = $ucModel->name;
             $ucImgs = $ucModel->getUserCollectionImage()->orderBy('position', 'asc')->all();
             foreach ($ucImgs as $v) {
-                $res[] = ['id' => $v['external_image_id'], 'thumb' => '/userimages/' . $v['image_file']];
+                $res[] = ['id' => $v['external_image_id'], 'alt_description' => $v['title'], 'thumb' => '/userimages/' . $v['image_file']];
             }
             $this->collection = json_encode($res);
             $this->id = $ucModel->id;
@@ -76,9 +77,7 @@ class UserCollectionForm extends Model
         if (empty($this->collection)) {
             return false;
         }
-//        var_dump($this->collection);
-//        die;
-//        $collectionData = preg_replace("/\"/", '', json_decode($this->collection));
+
         $collectionForm = json_decode($this->collection, true);
         $collection->name = mb_substr($this->name, 0, 254);
         $userModel->link('userCollection', $collection);
@@ -89,7 +88,7 @@ class UserCollectionForm extends Model
         try {
             foreach ($collectionForm as $k => $v) {
                 $imgArr = Yii::$app->unsplashApi->reduceSearchResult(['results' => [Yii::$app->unsplashApi->getPhotoById($v['id'])]], ['alt_description'])['results'][0];
-                $filename = Yii::$app->imageStorage->storeImage($userModel->getId(), $this->id, $v['id'], $imgArr['img'], ImageStorage::IMAGE_TYPE_IMG);
+                $filename = Yii::$app->imageStorage->storeImage($userModel->getId(), $this->id, $v['id'], $imgArr['img'], ImageStorageComponent::IMAGE_TYPE_IMG);
                 $newUci = new UserCollectionImage();
                 $newUci->external_image_id = $v['id'];
                 $newUci->title = $imgArr['alt_description'];
@@ -111,10 +110,7 @@ class UserCollectionForm extends Model
         if (null === $this->_userCollection) {
             return false;
         }
-//        var_dump(json_decode($this->collection, true));
-//        var_dump($this->collection);
-//        die;
-//        $collectoinForm = preg_replace("/\"/", '', json_decode($this->collection, true));
+
         $collectoinForm = json_decode($this->collection, true);
         $ucimgs = $this->_userCollection->getUserCollectionImage()->all();
         $toUpd = [];
@@ -151,7 +147,7 @@ class UserCollectionForm extends Model
 
                 $v = $collectoinForm[$k]['id'];
                 $imgArr = Yii::$app->unsplashApi->reduceSearchResult(['results' => [Yii::$app->unsplashApi->getPhotoById($v)]], ['alt_description'])['results'][0];
-                $filename = Yii::$app->imageStorage->storeImage($this->_userCollection->getUser()->one()->getId(), $this->id, $v, $imgArr['img'], ImageStorage::IMAGE_TYPE_IMG);
+                $filename = Yii::$app->imageStorage->storeImage($this->_userCollection->getUser()->one()->getId(), $this->id, $v, $imgArr['img'], ImageStorageComponent::IMAGE_TYPE_IMG);
                 $newUci = new UserCollectionImage();
                 $newUci->external_image_id = $v;
                 $newUci->title = $imgArr['alt_description'];

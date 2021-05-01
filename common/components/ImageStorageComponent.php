@@ -11,7 +11,7 @@ use yii\base\Component;
  *
  * @author Alejandro Zanlongo <azanlongo at gmail.com>
  */
-class ImageStorage extends Component
+class ImageStorageComponent extends Component
 {
 
     private $storagePath = DIRECTORY_SEPARATOR . 'imageStorage';

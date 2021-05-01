@@ -1,15 +1,18 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\UserCollection;
+use yii\bootstrap4\Html;
+use yii\web\View;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\UserCollection */
+/* @var $this View */
+/* @var $model UserCollection */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'User Collections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="user-collection-view">
 
@@ -37,10 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'collection',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    if($data->collection===null){return 'No images selected';};
-                    $thumbs='';
-                    foreach ($data->collection as $v){$thumbs.="<li><img src=\"{$v['thumb']}\"></li>";}
-                    return '<ul class="widgetview">'.$thumbs.'</ul>';
+                    if (empty($data)) {
+                        return 'No images selected';
+                    };
+                    $thumbs = '';
+                    foreach ($data->getUserCollectionImage()->all() as $v) {
+                        $thumbs .= "<li><img src=\"/userimages/{$v['image_file']}\"></li>";
+                    }
+                    return '<ul class="widgetview">' . $thumbs . '</ul>';
                 }
             ],
             'created_at:datetime',

@@ -1,7 +1,6 @@
 <?php
 
-use yii\helpers\Html;
-use yii\web\JqueryAsset;
+use yii\helpers\Url;
 use yii\web\View;
 
 $this->registerCss(<<<CSS
@@ -16,23 +15,24 @@ $this->registerCss(<<<CSS
         margin: 0px 12px 12px 0px;
         overflow: hidden;
         width: 200px;
-        height: 265px;
+        height: 389px;
         float: left; }
         ul.thumbnails li img{
-        width: 200px;
-        height: 255px;
+        width: 198px;
+        height: 253px;
         }
+        ul.thumbnails li:hover{cursor:pointer;}
         ul.thumbnails li .thumbnail {
-        padding: 6px;
-        border: 1px solid #DDD;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none; }
+        padding: 6px;}
 
         ul.thumbnails li .thumbnail img {
         -webkit-user-drag: none; }
-        ul.thumbnails li:hover {
-        background: #08C; }
+        ul.thumbnails li .card:hover {
+        border-color: #08C; }
+        ul.thumbnails li .card .card-text {
+        padding: 0 10px 0 10px; }
+       
+        ul.thumbnails li .card{height:387px; overflow:hidden}
         ul.thumbnails.selected {
         background-color: #f5f5f5;
         border: 1px #e3e3e3;
@@ -47,7 +47,7 @@ $this->registerJs(<<<JS
         var keyword = $(e.target).prev("input").val()
         $.ajax({
         JS .
-        'url:"' . \yii\helpers\Url::to(['collection/lookup']) . '",' .
+        'url:"' . Url::to(['collection/lookup']) . '",' .
         <<<JS
         method: "post",
         data: {keyword: keyword},
@@ -77,7 +77,7 @@ $this->registerJs(<<<JS
             }
         }
         function createLiElement(obj){
-           return '<li data-obj=\''+JSON.stringify(obj).replace(/'/g, "\\'")+'\' class="thumbnail"><img src="'+obj.thumb+'" />';
+           return '<li data-obj=\''+JSON.stringify(obj).replace(/'/g, "\\'")+'\' class="thumbnail"><div class="card" style="width: 200px;"><img src="'+obj.thumb+'" class="card-img-top" alt="'+obj.alt_description+'"><h5 class="card-title"></h5><p class="card-text">'+obj.alt_description+'</p></div></div>   </li>';
         }
         
         $(document).ready(function(){
