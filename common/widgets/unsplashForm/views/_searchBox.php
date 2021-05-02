@@ -69,4 +69,9 @@ JS, View::POS_READY);
         <ul class="thumbnails" id="imgp">
         </ul>
     </div>
+    <div class="form-group">
+        <h1>Selected images</h1>
+        <ul class="thumbnails selected" id="imgp-selected">
+        </ul>
+    </div>
 </div>

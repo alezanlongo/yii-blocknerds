@@ -2,7 +2,8 @@
 
 namespace backend\controllers;
 
-use app\models\UserCollectionForm;
+use backend\models\UserCollectionForm;
+use backend\models\UserCollectionQuery;
 use common\models\User;
 use common\models\UserCollection;
 use Yii;
@@ -49,7 +50,7 @@ class CollectionController extends Controller
      */
     public function actionIndex() {
         return $this->render('index', [
-                    'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getUserActiveCollection(), 'pagination' => ['pageSize' => 20]]),
+                    'dataProvider' => new ActiveDataProvider(['query' => UserCollectionQuery::getUsersActiveCollections(), 'pagination' => ['pageSize' => 20]]),
         ]);
     }
 
@@ -91,7 +92,7 @@ class CollectionController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id) {
-        $model = $this->findModel($id);
+        $model = UserCollectionQuery::getUserCollectionById($id);
         $modelCollectionForm = new UserCollectionForm($model);
         if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->updateCollection()) {
             return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
@@ -113,7 +114,7 @@ class CollectionController extends Controller
         }
         $kwd = $this->request->post()['keyword'] ?? '';
         $this->response->format = Response::FORMAT_JSON;
-        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search($kwd));
+        $imgRes = Yii::$app->unsplashApi->reduceSearchResult(Yii::$app->unsplashApi->search($kwd), ['alt_description']);
         $this->response->data = ['img' => $imgRes];
         return $this->response;
     }

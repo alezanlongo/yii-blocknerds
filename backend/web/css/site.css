@@ -1,11 +1,6 @@
-html,
+/*html,
 body {
     height: 100%;
-}
-
-body.blank {
-    display: flex;
-    padding: 40px 0;
 }
 
 .wrap {
@@ -13,19 +8,6 @@ body.blank {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
-}
-
-body.blank .wrap {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    margin: -40px auto;
-    padding: 15px;
-}
-
-body.blank .wrap > div {
-    width: 100%;
 }
 
 .wrap > .container {
@@ -54,7 +36,7 @@ body.blank .wrap > div {
     font-style: italic;
 }
 
-/* add sorting icons to gridview sort links */
+ add sorting icons to gridview sort links 
 a.asc:after, a.desc:after {
     position: relative;
     top: 1px;
@@ -67,11 +49,11 @@ a.asc:after, a.desc:after {
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+    content: "\e151";
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+    content: "\e152";
 }
 
 .sort-numerical a.asc:after {
@@ -90,8 +72,7 @@ a.desc:after {
     content: "\e156";
 }
 
-.grid-view th,
-.grid-view td:last-child {
+.grid-view td {
     white-space: nowrap;
 }
 
@@ -114,7 +95,7 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
-/* align the logout "link" (button in form) of the navbar */
+ align the logout "link" (button in form) of the navbar 
 .nav li > form > button.logout {
     padding: 15px;
     border: none;
@@ -136,4 +117,27 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}*/
+body {
+    height: 100%;
+}
+body .container{
+    padding-top: 60px;
+}
+
+nav {
+    border: none;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+    margin-top: 20px;
+}
+footer span{
+    padding-right: 15px;
+    padding-left: 15px;
 }

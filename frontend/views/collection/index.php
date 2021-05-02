@@ -6,8 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserCollectionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-//var_dump($dataProvider);
-//die;
+
 
 $this->title = 'User Collections';
 $this->params['breadcrumbs'][] = $this->title;

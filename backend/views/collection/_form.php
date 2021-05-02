@@ -11,11 +11,8 @@ use yii\widgets\ActiveForm;
 <div class="user-collection-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'collection')->textInput() ?>
-    <div class="form-group">
-        <ul class="thumbnails selected" id="imgp-selected">
-        </ul>
-    </div>
+    <?= $form->field($model, 'collection')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'name')->textInput() ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

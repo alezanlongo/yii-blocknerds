@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use common\components\ImageStorageComponent;
 use common\models\User;
@@ -112,15 +112,23 @@ class UserCollectionForm extends Model
         }
 
         $collectoinForm = json_decode($this->collection, true);
+//        \yii\helpers\VarDumper::dump($collectoinForm,10,true);die;
         $ucimgs = $this->_userCollection->getUserCollectionImage()->all();
         $toUpd = [];
         $toAdd = [];
         foreach ($collectoinForm as $k => $v) {
             $flag = false;
             foreach ($ucimgs as $kDb => $vDb) {
-                if ($v['id'] == $vDb['external_image_id']) {
-                    $flag = true;
-                    $toUpd[$kDb] = $k;
+                try {
+                    if(!isset($v['id'])|| !isset($vDb['external_image_id'])){
+//                        var_dump($v,$vDb);die;
+                    }
+                    
+                    if ($v['id'] == $vDb['external_image_id']) {
+                        $flag = true;
+                        $toUpd[$kDb] = $k;
+                    }
+                } catch (Exception $ex) {
                 }
             }
             if ($flag === false) {

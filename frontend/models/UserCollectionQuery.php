@@ -1,26 +1,20 @@
 <?php
 
-namespace common\models;
+namespace frontend\models;
+
+use common\models\UserCollection;
 
 /**
  * This is the ActiveQuery class for [[UserCollection]].
  *
  * @see UserCollection
  */
-class UsersCollectionsQuery extends \yii\db\ActiveQuery
+class UserCollectionQuery extends UserCollection
 {
     /* public function active()
       {
       return $this->andWhere('[[status]]=1');
       } */
-
-    /**
-     * Get ullection from active Users
-     * @return $this
-     */
-    public function getUserActiveCollection() {
-        return $this->joinWith('user u', true, 'INNER JOIN')->where(['u.status' => User::STATUS_ACTIVE]);
-    }
 
     /**
      * Get User collections by id
@@ -29,28 +23,28 @@ class UsersCollectionsQuery extends \yii\db\ActiveQuery
      * @param int $limit
      * @return $this
      */
-    public function getCollectionsByUserId(int $userId, int $offset = 0, int $limit = 20) {
+    static public function getCollectionsByUserId(int $userId, int $offset = 0, int $limit = 20) {
         if ($limit < 0 || $limit > 20) {
             $limit = 20;
         }
-        return $this->where(['user_id' => $userId])->offset($offset)->limit($limit);
+        return parent::find()->where(['user_id' => $userId])->offset($offset)->limit($limit);
     }
 
     /**
      * Get a collection by collection id and user id
      * @param int $userId
      * @param type $collectionId
-     * @return $this
+     * @return mixed
      */
-    public function getUserCollectionById(int $userId, $collectionId) {
-        return $this->where(['user_id' => $userId])->andWhere(['id' => $collectionId]);
+    static public function getUserCollectionById(int $userId, $collectionId) {
+        return parent::find()->where(['user_id' => $userId])->andWhere(['id' => $collectionId])->one();
     }
 
     /**
      * {@inheritdoc}
      * @return UserCollection[]|array
      */
-    public function all($db = null) {
+    static public function all($db = null) {
         return parent::all($db);
     }
 
@@ -58,7 +52,7 @@ class UsersCollectionsQuery extends \yii\db\ActiveQuery
      * {@inheritdoc}
      * @return UserCollection|array|null
      */
-    public function one($db = null) {
+    static public function one($db = null) {
         return parent::one($db);
     }
 

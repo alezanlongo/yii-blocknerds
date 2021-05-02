@@ -1,13 +1,14 @@
 <?php
-/* @var $this \yii\web\View */
+/* @var $this View */
 /* @var $content string */
 
-use backend\assets\AppAsset;
-use yii\helpers\Html;
+use common\widgets\Alert;
+use frontend\assets\AppAsset;
+use yii\bootstrap4\Breadcrumbs;
+use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
-use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
+use yii\web\View;
 
 AppAsset::register($this);
 ?>
@@ -51,7 +52,7 @@ AppAsset::register($this);
                         . '</li>';
             }
             echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
+                'options' => ['class' => 'navbar-nav ml-auto'],
                 'items' => $menuItems,
             ]);
             NavBar::end();
@@ -68,16 +69,11 @@ AppAsset::register($this);
             </div>
         </div>
 
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted pull-left">
-                    &copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?>
-                </span>
-                <span class="text-muted pull-right">
-                    <?= Yii::powered() ?>
-                </span>
-            </div>
+        <footer>
+            <span class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
+            <span class="pull-rgiht"><?= Yii::powered() ?></span>
         </footer>
+
 
         <?php $this->endBody() ?>
     </body>

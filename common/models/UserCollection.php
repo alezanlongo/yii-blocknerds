@@ -74,12 +74,4 @@ class UserCollection extends ActiveRecord
         return $this->hasMany(\common\models\UserCollectionImage::class, ['usercollection_id' => 'id']);
     }
 
-    /**
-     * {@inheritdoc}
-     * @return UsersCollectionsQuery the active query used by this AR class.
-     */
-    public static function find() {
-        return new UsersCollectionsQuery(get_called_class());
-    }
-
 }

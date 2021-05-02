@@ -2,15 +2,18 @@
 
 namespace frontend\controllers;
 
-use app\models\UserCollectionForm;
+use frontend\models\UserCollectionForm;
+use frontend\models\UserCollectionQuery;
 use common\models\User;
 use common\models\UserCollection;
+use DateTime;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -49,7 +52,7 @@ class CollectionController extends Controller
      */
     public function actionIndex() {
         return $this->render('index', [
-                    'dataProvider' => new ActiveDataProvider(['query' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId()), 'pagination' => ['pageSize' => 20]]),
+                    'dataProvider' => new ActiveDataProvider(['query' => UserCollectionQuery::getCollectionsByUserId(Yii::$app->getUser()->getId()), 'pagination' => ['pageSize' => 20]]),
         ]);
     }
 
@@ -60,8 +63,12 @@ class CollectionController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id) {
+        $model = UserCollectionQuery::getUserCollectionById(\Yii::$app->getUser()->getId(), $id);
+        if ($model === null) {
+            throw new NotFoundHttpException('collection not forund');
+        }
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+                    'model' => $model,
         ]);
     }
 
@@ -91,7 +98,10 @@ class CollectionController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id) {
-        $model = $this->findModel($id);
+        $model = UserCollectionQuery::getUserCollectionById(\Yii::$app->getUser()->getId(), $id);
+        if ($model === null) {
+            throw new NotFoundHttpException('collection not forund');
+        }
         $modelCollectionForm = new UserCollectionForm($model);
         if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->updateCollection()) {
             return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
@@ -133,7 +143,7 @@ class CollectionController extends Controller
 
     public function beforeAction($action): bool {
         if ($action->actionMethod === 'actionLookup') {
-            $dt = new \DateTime();
+            $dt = new DateTime();
             Yii::info("action method '{$action->actionMethod}' start: {$dt->format('Y-m-d H:i:s')}", 'unsplashSearch');
         }
         return parent::beforeAction($action);
@@ -141,7 +151,7 @@ class CollectionController extends Controller
 
     public function afterAction($action, $result) {
         if ($action->actionMethod === 'actionLookup') {
-            $dt = new \DateTime();
+            $dt = new DateTime();
             Yii::info("action method '{$action->actionMethod}' end: {$dt->format('Y-m-d H:i:s')}", 'unsplashSearch');
         }
 

@@ -4,12 +4,12 @@ namespace frontend\controllers;
 
 use common\libs\CollectionsUtils;
 use common\models\LoginForm;
-use common\models\UserCollection;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use frontend\models\UserCollectionQuery;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -81,7 +81,7 @@ class SiteController extends Controller
             return $this->redirect('site/login');
         }
         return $this->render('index',
-                        ['collections' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId(), 0, 10)->orderBy('updated_at', 'desc')->all()]
+                        ['collections' => UserCollectionQuery::getCollectionsByUserId(Yii::$app->getUser()->getId(), 0, 10)->orderBy('updated_at', 'desc')->all()]
         );
     }
 
@@ -280,7 +280,7 @@ class SiteController extends Controller
             return new BadRequestHttpException('request must be ajax GET');
         }
 
-        $res = UserCollection::find()->getUserCollectionById(Yii::$app->getUser()->getId(), $id)->one();
+        $res = UserCollectionQuery::getUserCollectionById(Yii::$app->getUser()->getId(), $id);
         $this->response->format = Response::FORMAT_JSON;
         if (empty($res)) {
             $this->response->data(['status' => 'err', 'message' => 'collection doesn\'t exists']);

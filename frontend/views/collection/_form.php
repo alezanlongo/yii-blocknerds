@@ -14,10 +14,6 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'collection')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'name')->textInput() ?>
     <div class="form-group">
-        <ul class="thumbnails selected" id="imgp-selected">
-        </ul>
-    </div>
-    <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
