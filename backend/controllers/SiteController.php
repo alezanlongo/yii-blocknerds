@@ -116,7 +116,7 @@ class SiteController extends Controller
      */
     public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
-            return $this->redirect('site/login');
+            return $this->redirect('site/index');
         }
 
         $this->layout = 'blank';

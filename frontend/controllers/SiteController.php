@@ -77,6 +77,9 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionIndex() {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('site/login');
+        }
         return $this->render('index',
                         ['collections' => UserCollection::find()->getCollectionsByUserId(Yii::$app->getUser()->getId(), 0, 10)->orderBy('updated_at', 'desc')->all()]
         );
@@ -89,7 +92,7 @@ class SiteController extends Controller
      */
     public function actionLogin() {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('index');
         }
 
         $model = new LoginForm();

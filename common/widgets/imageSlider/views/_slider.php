@@ -1,21 +1,23 @@
 <?php
 
-use yii\helpers\Html;
-use yii\web\JqueryAsset;
 use yii\web\View;
 
 /**
- * Description of slieder
+ * Description of slider
  *
  * @author Alejandro Zanlongo <azanlongo at gmail.com>
  */
 /* @var $this View */
-//var_dump($images);
+
+$id = 'image-slider-' . uniqid();
+$this->registerJs("$(\"#$id\").imageSlider();", View::POS_READY);
 ?>
-<div class="image-slider">
-    <div class="nav l">&lt;</div>
-    <div class="nav r">&gt;</div>
-    <ul class="image-slider">
+<div class="image-slider" id="<?= $id ?>">
+    <div class="nav">
+        <div class="l">&lt;</div>
+        <div class="r">&gt;</div>
+    </div>
+    <ul>
         <?php
         foreach ($images as $v) {
             echo '<li><img src="' . $v . '" /></li>';

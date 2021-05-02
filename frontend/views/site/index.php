@@ -1,7 +1,9 @@
 <?php
 
+use common\widgets\imageSlider\ImageSlider;
 use yii\helpers\Url;
 use yii\web\View;
+use yii\bootstrap4\BootstrapAsset;
 
 /* @var $this View */
 
@@ -10,17 +12,17 @@ $this->registerJs(<<<JS
             var isDownloading = false;
             $(".download-collection").on("click",function(e){
             e.preventDefault()
+            if(isDownloading==true){return false;}
+            isDownloading = true;
             let id = e.currentTarget.id.match(/^collection\-([0-9]+)/)[1]
-            if(isDownloading===true){return false}
-            isDownloadig = true;
+            $('#'+e.currentTarget.id).append(' <i class="spinner-border spinner-border-sm"></i>');
             $.ajax({
             JS .
         'url:"' . Url::to(['site/download']) . '/?id="+id,' .
-        'success: function(res){isDownloading=false;location.href="' . Url::to(['site/download']) . '?id="+id+"&token="+res.download_token+"";},' .
+        'success: function(res){ $("i","#"+e.currentTarget.id).remove(); isDownloading=false;location.href="' . Url::to(['site/download']) . '?id="+id+"&token="+res.download_token+"";},' .
         <<<JS
-             error: function(err){isDownloading = false; alert('error: '+err.responseText)}
+             error: function(err){ $("i","#"+e.currentTarget.id).remove(); isDownloading = false; alert('error: '+err.responseText)}
             })
-            //alert(isDownloading)
         })
         
         JS, View::POS_READY);
@@ -43,18 +45,17 @@ $this->registerJs(<<<JS
                         <?php
                         $images = [];
                         foreach ($vCollection->getUserCollectionImage()->all() as $vImages) {
-//                            $images[] = '<div style="text-align:center; background-color:#000"><img src="/userimages/' . $vImages['image_file'] . '" /></div>';
                             $images[] = "/userimages/{$vImages['image_file']}";
                         }
-                        echo common\widgets\imageSlider\ImageSlider::widget(['images' => $images]);
+                        echo ImageSlider::widget(['images' => $images]);
                         ?>
                         <br />
-                        <p><a class="btn btn-default download-collection" id="collection-<?= $vCollection['id'] ?>" href="#">Download collection &raquo;</a></p>
+                        <p><a class="btn btn-dark download-collection" id="collection-<?= $vCollection['id'] ?>" href="#">Download collection</a></p>
                     </div>
-        <?php
-    endforeach;
-endif;
-?>
+                    <?php
+                endforeach;
+            endif;
+            ?>
         </div>
     </div>
 </div>

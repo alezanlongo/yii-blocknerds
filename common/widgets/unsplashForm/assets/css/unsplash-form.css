@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 1, 2021, 8:29:57 PM
+    Author     : Alejandro Zanlongo <azanlongo at gmail.com>
+*/
+
+ul.thumbnails {
+    overflow: hidden;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px; }
+ul.thumbnails li {
+    margin: 0px 12px 12px 0px;
+    overflow: hidden;
+    width: 200px;
+    height: 389px;
+    float: left; }
+ul.thumbnails li img{
+    width: 198px;
+    height: 253px;
+}
+ul.thumbnails li:hover{cursor:pointer;}
+ul.thumbnails li .thumbnail {
+    padding: 6px;}
+
+ul.thumbnails li .thumbnail img {
+    -webkit-user-drag: none; }
+ul.thumbnails li .card:hover {
+    border-color: #08C; }
+ul.thumbnails li .card .card-text {
+    padding: 0 10px 0 10px; }
+
+ul.thumbnails li .card{height:387px; overflow:hidden}
+ul.thumbnails.selected {
+    background-color: #f5f5f5;
+    border: 1px #e3e3e3;
+    min-height: 200px;
+    padding: 10px;
+}

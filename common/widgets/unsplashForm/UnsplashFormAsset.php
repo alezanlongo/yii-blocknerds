@@ -1,22 +1,22 @@
 <?php
 
-namespace common\widgets\imageSlider;
+namespace common\widgets\unsplashForm;
 
 use yii\web\AssetBundle;
 
 /**
- * Description of ImageSliderAsset
+ * Description of UnsplashFormAsset
  *
  * @author Alejandro Zanlongo <azanlongo at gmail.com>
  */
-class ImageSliderAsset extends AssetBundle
+class UnsplashFormAsset extends AssetBundle
 {
 
-    public $js = [
-        'js/image-slider.js'
-    ];
+//    public $js = [
+//        'js/unsplash-form.js'
+//    ];
     public $css = [
-        'css/image-slider.css'
+        'css/unsplash-form.css'
     ];
     public $depends = [
         'yii\web\JqueryAsset'
@@ -28,8 +28,7 @@ class ImageSliderAsset extends AssetBundle
     }
 
     public $publishOptions = [
-//        'forceCopy' => true,
+        'forceCopy' => true,
     ];
-
 
 }

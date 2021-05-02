@@ -156,6 +156,10 @@ class UserCollectionForm extends Model
                 $this->_userCollection->link('userCollectionImage', $newUci);
             }
         }
+        //Update for avoid download zip cache
+        if (!empty($toAdd) || !empty($toDel) || !empty($toUpd)) {
+            $this->_userCollection->updated_at = time();
+        }
         $this->_userCollection->name = $this->name;
         return $this->_userCollection->save();
     }
