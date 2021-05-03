@@ -20,7 +20,7 @@ $this->registerJs("$(\"#$id\").imageSlider();", View::POS_READY);
     <ul>
         <?php
         foreach ($images as $v) {
-            echo '<li><img src="' . $v . '" /></li>';
+            echo '<li><p>view</p><img src="' . $v . '" /></li>';
         }
         ?>    
     </ul>

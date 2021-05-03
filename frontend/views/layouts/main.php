@@ -73,12 +73,10 @@ Breadcrumbs::widget([
             </div>
         </div>
 
-        <!--<footer class="bd-footer p-3 p-md-5 mt-5 bg-light text-center text-sm-start">-->
         <footer>
             <span class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
             <span class="pull-rgiht"><?= Yii::powered() ?></span>
         </footer>
-
         <?php $this->endBody() ?>
     </body>
 </html>

@@ -2,16 +2,12 @@
 
 namespace backend\controllers;
 
-use app\libs\CollectionsUtils;
 use common\models\LoginForm;
 use common\models\User;
-use common\models\UserCollection;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\web\Response;
 
 /**
  * Site controller
@@ -32,7 +28,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'download'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function () {
@@ -72,7 +68,8 @@ class SiteController extends Controller
         }
         return $this->redirect('collection/index');
     }
-     /**
+
+    /**
      * Login action.
      *
      * @return string

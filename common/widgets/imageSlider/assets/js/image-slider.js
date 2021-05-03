@@ -1,7 +1,7 @@
 (function ($) {
 
     $.imageSlider = function (elm) {
-
+        var imageSliderModal = '<div class="modal fade" id="image-slider-modal"tabindex="-1" role="dialog" aria-labelledby="..." aria-hidden="true"><div class="modal-dialog modal-lg"><div class="modal-content"></div></div></div>';
         var settings = {
             elm: $(elm),
             transition: false,
@@ -18,6 +18,12 @@
             });
             $('.nav .r', settings.elm).on('click', function () {
                 moveSlider('right')
+            });
+            $('li p', settings.elm).on('click', function () {
+                $('#image-slider-modal').remove();
+                $('body').prepend(imageSliderModal);
+                $('.modal-content', '#image-slider-modal').html('<img src="' + $('img', $('ul', settings.elm).children('li').eq(settings.idx)).attr('src') + '"/>');
+                $('#image-slider-modal').modal({keyboard: true});
             });
         }
 
@@ -56,7 +62,6 @@
 
     }
     $.fn.imageSlider = function () {
-
         return this.each(function () {
             if (undefined == $(this).data('imageSlider')) {
                 var plugin = new $.imageSlider(this);
