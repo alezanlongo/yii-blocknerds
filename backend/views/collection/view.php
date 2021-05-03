@@ -36,6 +36,7 @@ YiiAsset::register($this);
         'model' => $model,
         'attributes' => [
             'id',
+            'name',
             [
                 'attribute' => 'collection',
                 'format' => 'raw',

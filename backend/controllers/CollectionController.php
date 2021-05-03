@@ -127,8 +127,17 @@ class CollectionController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $model = UserCollectionQuery::getUserCollectionById($id);
+        if ($model === null) {
+            Yii::$app->session->setFlash('error', "Collection {$id} doesn't exists");
+            return $this->redirect(['index']);
+        }
 
+        foreach ($model->getUserCollectionImage()->all() as $v) {
+            Yii::$app->imageStorage->deleteImage($v['image_file']);
+        }
+        $model->delete();
+        Yii::$app->session->setFlash('success', "Collection {$id} was deleted");
         return $this->redirect(['index']);
     }
 
