@@ -36,11 +36,11 @@ $this->registerJs(<<<JS
             var arr = [];
             for(let elm of $("#imgp-selected")[0].children){
                arr.push($(elm).data('obj'))
-               $("#$formFieldId").val(JSON.stringify(arr).replace(/'/g, "\\'"))
+               $("#$formFieldId").val(JSON.stringify(arr).replace(/'/g, ""))
             }
         }
         function createLiElement(obj){
-           return '<li data-obj=\''+JSON.stringify(obj).replace(/'/g, "\\'")+'\' class="thumbnail"><div class="card" style="width: 200px;"><img src="'+obj.thumb+'" class="card-img-top" alt="'+obj.alt_description+'"><h5 class="card-title"></h5><p class="card-text">'+obj.alt_description+'</p></div></div>   </li>';
+           return '<li data-obj=\''+JSON.stringify(obj).replace(/'/g, "")+'\' class="thumbnail"><div class="card" style="width: 200px;"><img src="'+obj.thumb+'" class="card-img-top" alt="'+obj.alt_description+'"><h5 class="card-title"></h5><p class="card-text">'+obj.alt_description+'</p></div></div>   </li>';
         }
         
         $(document).ready(function(){
