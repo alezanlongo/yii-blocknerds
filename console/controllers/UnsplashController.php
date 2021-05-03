@@ -32,7 +32,7 @@ class UnsplashController extends Controller
                 case 'json':
                     $filename = $filename . '.json';
                     $fh = fopen($filename, 'w');
-                    fwrite($fh, json_encode($res));
+                    fwrite($fh, json_encode($res,JSON_PRETTY_PRINT));
                     fclose($fh);
                     break;
                 default :
