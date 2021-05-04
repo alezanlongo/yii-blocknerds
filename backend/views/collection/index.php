@@ -20,20 +20,28 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php // echo Html::a('Create User Collection', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',
             'name',
-            'user.username',
+            [
+                'label' => 'Username',
+                'format' => 'ntext',
+                'attribute' => 'username',
+                'value' => function ($model) {
+                    return $model->user->username;
+                },
+            ],
             'created_at:datetime',
             'updated_at:datetime',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
 
 
 </div>

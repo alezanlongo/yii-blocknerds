@@ -19,10 +19,10 @@ class UserCollectionQuery extends UserCollection
 
     /**
      * Get ullection from active Users
-     * @return $this
+     * @return \yii\db\ActiveQuery;
      */
     static public function getUsersActiveCollections(int $offset = 0, int $limit = 20) {
-        return UserCollection::find()->joinWith('user u', true, 'INNER JOIN')->where(['u.status' => User::STATUS_ACTIVE])->offset($offset)->limit($limit);
+        return UserCollection::find()->innerJoinWith('user', true)->where(['user.status' => User::STATUS_ACTIVE])->offset($offset)->limit($limit);
     }
 
     /**

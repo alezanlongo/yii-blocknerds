@@ -49,8 +49,11 @@ class CollectionController extends Controller
      * @return mixed
      */
     public function actionIndex() {
+        $searchModel = new \backend\models\UserCollectionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
-                    'dataProvider' => new ActiveDataProvider(['query' => UserCollectionQuery::getUsersActiveCollections(), 'pagination' => ['pageSize' => 20]]),
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
         ]);
     }
 

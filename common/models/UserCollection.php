@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $user_id
+ * @property string $username
  * @property string|null $name
  * @property int $created_at
  * @property int $updated_at
