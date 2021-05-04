@@ -1,5 +1,7 @@
 <?php
 
+use yii\web\JsonParser;
+
 $params = array_merge(
         require __DIR__ . '/../../common/config/params.php',
         require __DIR__ . '/../../common/config/params-local.php',
@@ -40,7 +42,17 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                'POST api/auth/login' => 'api/auth/login',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/collection',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/image',
+                ],
             ],
         ],
     ],

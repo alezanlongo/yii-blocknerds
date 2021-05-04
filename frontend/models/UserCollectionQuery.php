@@ -21,7 +21,7 @@ class UserCollectionQuery extends UserCollection
      * @param int $userId
      * @param int $offset
      * @param int $limit
-     * @return $this
+     * @return \yii\db\ActiveQuery;
      */
     static public function getCollectionsByUserId(int $userId, int $offset = 0, int $limit = 20) {
         if ($limit < 0 || $limit > 20) {

@@ -41,7 +41,7 @@ $this->registerJs(<<<JS
             if (!empty($collections)):
                 foreach ($collections as $vCollection):
                     ?>
-                    <div class="col-lg-4">
+                    <div class="col-lg-12">
                         <?php
                         $images = [];
                         foreach ($vCollection->getUserCollectionImage()->all() as $vImages) {

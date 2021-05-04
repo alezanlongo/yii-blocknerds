@@ -7,7 +7,10 @@
             transition: false,
             cntElm: 0,
             elmWidth: 0,
-            idx: 0
+            idx: 0,
+            autoplay: false,
+            autoplayInterval: null,
+            autoplayBack: false
         };
 
 
@@ -25,6 +28,34 @@
                 $('.modal-content', '#image-slider-modal').html('<img src="' + $('img', $('ul', settings.elm).children('li').eq(settings.idx)).attr('src') + '"/>');
                 $('#image-slider-modal').modal({keyboard: true});
             });
+            $('.autoplay', settings.elm).on('click', function () {
+                if (settings.autoplay === false) {
+                    settings.autoplay = true;
+                    $('.autoplay', settings.elm).removeClass('play').addClass('pause');
+                    settings.autoplayInterval = setInterval(function () {
+                        if (settings.idx + 1 < settings.cntElm && settings.autoplayBack === false) {
+                            moveSlider('right');
+                        } else if (settings.idx + 1 > 1 && settings.autoplayBack === true) {
+                            moveSlider('left');
+                        }
+                        if (settings.idx + 1 == settings.cntElm) {
+                            if (settings.idx + 1 == 1) {
+                                settings.autoplayBack = false
+                            } else {
+                                settings.autoplayBack = true
+                            }
+                        }
+                        if (settings.autoplayBack == true && settings.idx + 1 == 1) {
+                            settings.autoplayBack = false;
+                        }
+                    }, 2000);
+                } else {
+                    $('.autoplay', settings.elm).removeClass('pause').addClass('play');
+                    clearInterval(settings.autoplayInterval);
+                    settings.autoplay = false;
+                }
+            })
+
         }
 
         function moveSlider(dir) {
@@ -48,8 +79,18 @@
             settings.transition = true
 
             $('ul li', settings.elm).animate({"left": moveTo}, {easing: 'swing', complete: function () {
+                    setCounter();
                     settings.transition = false
                 }});
+        }
+
+        function autoplay() {
+
+        }
+
+        function setCounter() {
+            let cnt = settings.idx + 1 + "/" + settings.cntElm;
+            $('.cnt', settings.elm).html(cnt);
         }
 
         function init() {
@@ -57,6 +98,7 @@
             settings.elmWidth = elmWidth = $('ul', elm).width();
             $('ul', settings.elm).width((elmWidth * settings.cntElm) + 'px');
             bindControls();
+            setCounter();
         }
         init();
 
