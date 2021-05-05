@@ -28,7 +28,7 @@ class ImageSliderAsset extends AssetBundle
     }
 
     public $publishOptions = [
-        'forceCopy' => true,
+//        'forceCopy' => true,
     ];
 
 
