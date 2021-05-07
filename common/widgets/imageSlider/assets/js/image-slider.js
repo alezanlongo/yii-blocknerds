@@ -29,32 +29,9 @@
                 $('#image-slider-modal').modal({keyboard: true});
             });
             $('.autoplay', settings.elm).on('click', function () {
-                if (settings.autoplay === false) {
-                    settings.autoplay = true;
-                    $('.autoplay', settings.elm).removeClass('play').addClass('pause');
-                    settings.autoplayInterval = setInterval(function () {
-                        if (settings.idx + 1 < settings.cntElm && settings.autoplayBack === false) {
-                            moveSlider('right');
-                        } else if (settings.idx + 1 > 1 && settings.autoplayBack === true) {
-                            moveSlider('left');
-                        }
-                        if (settings.idx + 1 == settings.cntElm) {
-                            if (settings.idx + 1 == 1) {
-                                settings.autoplayBack = false
-                            } else {
-                                settings.autoplayBack = true
-                            }
-                        }
-                        if (settings.autoplayBack == true && settings.idx + 1 == 1) {
-                            settings.autoplayBack = false;
-                        }
-                    }, 2000);
-                } else {
-                    $('.autoplay', settings.elm).removeClass('pause').addClass('play');
-                    clearInterval(settings.autoplayInterval);
-                    settings.autoplay = false;
-                }
-            })
+                autoplay()
+            }
+            )
 
         }
 
@@ -85,7 +62,31 @@
         }
 
         function autoplay() {
-
+            if (settings.autoplay === false) {
+                settings.autoplay = true;
+                $('.autoplay', settings.elm).removeClass('play').addClass('pause');
+                settings.autoplayInterval = setInterval(function () {
+                    if (settings.idx + 1 < settings.cntElm && settings.autoplayBack === false) {
+                        moveSlider('right');
+                    } else if (settings.idx + 1 > 1 && settings.autoplayBack === true) {
+                        moveSlider('left');
+                    }
+                    if (settings.idx + 1 == settings.cntElm) {
+                        if (settings.idx + 1 == 1) {
+                            settings.autoplayBack = false
+                        } else {
+                            settings.autoplayBack = true
+                        }
+                    }
+                    if (settings.autoplayBack == true && settings.idx + 1 == 1) {
+                        settings.autoplayBack = false;
+                    }
+                }, 2000);
+            } else {
+                $('.autoplay', settings.elm).removeClass('pause').addClass('play');
+                clearInterval(settings.autoplayInterval);
+                settings.autoplay = false;
+            }
         }
 
         function setCounter() {

@@ -14,9 +14,18 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'v1' => [
+            'basePath' => '@api/modules/v1',
+            'class' => 'api\modules\v1\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -44,14 +53,10 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'POST api/auth/login' => 'api/auth/login',
+                'POST v1/auth/login' => 'v1/auth/login',
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/collection',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/image',
+                    'controller' => ['v1/collection', 'v1/image'],
                 ],
             ],
         ],

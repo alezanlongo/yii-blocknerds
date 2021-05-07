@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers\api;
+namespace api\modules\v1\controllers;
 
 use Codeception\Util\HttpCode;
 use frontend\models\UserCollectionImageQuery;

@@ -69,12 +69,10 @@ AppAsset::register($this);
             </div>
         </div>
 
-        <footer>
+  <footer>
             <span class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
             <span class="pull-rgiht"><?= Yii::powered() ?></span>
         </footer>
-
-
         <?php $this->endBody() ?>
     </body>
 </html>

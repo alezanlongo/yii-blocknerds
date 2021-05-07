@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers\api;
+namespace api\modules\v1\controllers;
 
 use Codeception\Util\HttpCode;
 use frontend\models\UserCollectionQuery;
@@ -20,8 +20,8 @@ class CollectionController extends ActiveController
     public $modelClass = 'common\models\UserCollection';
 
     public function init() {
-        parent::init();
         Yii::$app->user->enableSession = false;
+        parent::init();
     }
 
     public function behaviors() {
