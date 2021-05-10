@@ -56,6 +56,7 @@ return [
                 'POST v1/auth/login' => 'v1/auth/login',
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'prefix'=>'api',
                     'controller' => ['v1/collection', 'v1/image'],
                 ],
             ],
