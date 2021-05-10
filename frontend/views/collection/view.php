@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $imgs[] = '/userimages/' . $v['image_file'];
             ?>
             <div class="card " style="width:200px; margin:10px 0 0 10px" onclick="currentSlide(<?= $k + 1 ?>)">
-                <img class="card-img-top .islb-modal-demo" src="/userimages/<?= $v['image_file'] ?>" alt="<?= $v['title'] ?>">
+                <img class="card-img-top islb-modal-demo" src="/userimages/<?= $v['image_file'] ?>" alt="<?= $v['title'] ?>">
                 <div class="card-body">
                     <p class="card-text"><?= $v['title'] ?></p>
                 </div>
