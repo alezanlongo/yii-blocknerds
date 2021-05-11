@@ -9,6 +9,7 @@ use common\fixtures\UserCollectionFixture;
 use common\fixtures\UserCollectionImageFixture;
 use common\fixtures\UserFixture;
 use frontend\models\UserCollectionForm;
+use InvalidArgumentException;
 use function codecept_data_dir;
 
 /**
@@ -51,13 +52,37 @@ class UserCollectionFormTest extends Unit
         $modelMock->collection = $this->jsonCollectionCreate;
         $modelMock->name = 'test';
 
-        //Find dentro de fixture
         $user = $this->tester->grabRecord('common\models\User', [
             'username' => 'okirlin',
             'email' => 'brady.renner@rutherford.com',
         ]);
         $this->assertTrue($modelMock->validate());
         $this->assertTrue($modelMock->createCollection($user));
+    }
+
+    public function testEmptyDataCreateCollection() {
+        $modelMock = $this->make(UserCollectionForm::class);
+        $modelMock->collection = '';
+        $modelMock->name = 'test';
+
+        $user = $this->tester->grabRecord('common\models\User', [
+            'id' => 1
+        ]);
+        $this->assertFalse($modelMock->validate());
+        $this->assertFalse($modelMock->createCollection($user));
+    }
+
+    public function testInvalidDataCreateCollection() {
+        $modelMock = $this->make(UserCollectionForm::class);
+        $modelMock->collection = $this->jsonCollectionCreate . 'dasd addadas dasd asdfaefa f';
+        $modelMock->name = 'test';
+
+        $user = $this->tester->grabRecord('common\models\User', [
+            'id' => 1
+        ]);
+        $this->assertTrue($modelMock->validate());
+        $this->expectExceptionObject(new InvalidArgumentException('invalid collection data'));
+        $modelMock->createCollection($user);
     }
 
     public function testUpdateCollection() {

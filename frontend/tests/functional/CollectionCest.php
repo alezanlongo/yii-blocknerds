@@ -2,7 +2,14 @@
 
 namespace frontend\tests\functional;
 
+use Codeception\Module\Yii2;
+use common\fixtures\UserCollectionFixture;
+use common\fixtures\UserCollectionImageFixture;
+use common\fixtures\UserFixture;
+use common\models\UserCollection;
+use frontend\models\UserCollectionQuery;
 use frontend\tests\FunctionalTester;
+use function codecept_data_dir;
 
 /**
  * Description of CollectionCest
@@ -17,16 +24,24 @@ class CollectionViewCest
     /**
      * Load fixtures before db transaction begin
      * Called in _before()
-     * @see \Codeception\Module\Yii2::_before()
-     * @see \Codeception\Module\Yii2::loadFixtures()
+     * @see Yii2::_before()
+     * @see Yii2::loadFixtures()
      * @return array
      */
     public function _fixtures() {
         return [
             'user' => [
-                'class' => \common\fixtures\UserFixture::class,
+                'class' => UserFixture::class,
                 'dataFile' => codecept_data_dir() . 'login_data.php',
             ],
+            'UserCollection' => [
+                'class' => UserCollectionFixture::class,
+                'dataFile' => codecept_data_dir() . 'user_collection_data.php'
+            ],
+            'UserCollectionImage' => [
+                'class' => UserCollectionImageFixture::class,
+                'dataFile' => codecept_data_dir() . 'user_collection_image_data.php'
+            ]
         ];
     }
 
@@ -43,6 +58,7 @@ class CollectionViewCest
     }
 
     public function createCollection(FunctionalTester $I) {
+        $collectionName = 'dog collection';
         $I->amOnPage('collection/create');
         $I->see('Selected images', 'h1');
         $I->see('Image Search', 'label');
@@ -50,21 +66,65 @@ class CollectionViewCest
         $I->click('sch-img');
         $I->submitForm('#collection-form', [
             'UserCollectionForm[collection]' => $this->jsonCollectionCreate,
-            'UserCollectionForm[name]' => 'dog collection'
+            'UserCollectionForm[name]' => $collectionName
         ]);
-        $I->amOnRoute('collection/view');
+        $I->seeRecord(UserCollection::class, [
+            'user_id' => \Yii::$app->user->id,
+            'name' => $collectionName
+        ]);
+        $I->seeLink('Update');
+        $I->seeLink('Delete');
     }
 
     public function createCollectionWithEmptyForm(FunctionalTester $I) {
         $I->amOnPage('collection/create');
         $I->see('Selected images', 'h1');
-//        $I->see('Image Search', 'label');
-//        $I->fillField(['name' => 'search'], 'dog');
-//        $I->click('sch-img');
         $I->submitForm('#collection-form', []);
         $I->seeValidationError("Collection cannot be blank.");
         $I->seeValidationError("Collection's name cannot be blank.");
     }
+
+    public function updateCollection(FunctionalTester $I) {
+        $userCollection = UserCollectionQuery::getUserCollectionById(1, 1);
+        $I->amOnPage(['collection/update?id=' . $userCollection->id]);
+        $newTitle = 'new title';
+        $I->submitForm('#collection-form', [
+            'UserCollectionForm[collection]' => $this->jsonCollectionCreate,
+            'UserCollectionForm[name]' => $newTitle,
+        ]);
+
+        $I->seeRecord(UserCollection::class, [
+            'id' => $userCollection->id,
+            'user_id' => 1,
+            'name' => $newTitle
+        ]);
+    }
+
+    public function updateCollectionWithEmptyForm(FunctionalTester $I) {
+        $userCollection = UserCollectionQuery::getUserCollectionById(1, 1);
+        $I->amOnPage(['collection/update?id=' . $userCollection->id]);
+        $I->submitForm('#collection-form', [
+            'UserCollectionForm[collection]' => '',
+            'UserCollectionForm[name]' => '',
+        ]);
+        $I->seeValidationError("Collection cannot be blank.");
+        $I->seeValidationError("Collection's name cannot be blank.");
+    }
+
+// It's possible?
+// 
+//    public function deleteCollection(FunctionalTester $I) {
+//        $I->amOnPage('collection/create');
+//        $I->submitForm('#collection-form', [
+//            'UserCollectionForm[collection]' => $this->jsonCollectionCreate,
+//            'UserCollectionForm[name]' => 'dog collection'
+//        ]);
+//        $href = $I->grabAttributeFrom('a.btn-danger', 'href');
+//        $I->sendAjaxPostRequest($href);
+////        $I->makeHtmlSnapshot();
+////        $I->amOnPage($href);
+////        $I->see('collection not forund');
+//    }
 
     protected function formParams($login, $password) {
         return [

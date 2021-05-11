@@ -6,6 +6,7 @@ use common\components\ImageStorageComponent;
 use common\models\User;
 use common\models\UserCollection;
 use common\models\UserCollectionImage;
+use InvalidArgumentException;
 use Yii;
 use yii\base\Model;
 use yii\httpclient\Exception;
@@ -79,6 +80,10 @@ class UserCollectionForm extends Model
         }
 
         $collectionForm = json_decode($this->collection, true);
+        if (!is_array($collectionForm)) {
+            throw new InvalidArgumentException('invalid collection data');
+        }
+
         $collection->name = mb_substr($this->name, 0, 254);
         $userModel->link('userCollection', $collection);
         $staus = $userModel->save();
@@ -112,7 +117,9 @@ class UserCollectionForm extends Model
         }
 
         $collectoinForm = json_decode($this->collection, true);
-//        \yii\helpers\VarDumper::dump($collectoinForm,10,true);die;
+        if (!is_array($collectionForm)) {
+            throw new InvalidArgumentException('invalid collection data');
+        }
         $ucimgs = $this->_userCollection->getUserCollectionImage()->all();
         $toUpd = [];
         $toAdd = [];
@@ -120,15 +127,16 @@ class UserCollectionForm extends Model
             $flag = false;
             foreach ($ucimgs as $kDb => $vDb) {
                 try {
-                    if(!isset($v['id'])|| !isset($vDb['external_image_id'])){
+                    if (!isset($v['id']) || !isset($vDb['external_image_id'])) {
 //                        var_dump($v,$vDb);die;
                     }
-                    
+
                     if ($v['id'] == $vDb['external_image_id']) {
                         $flag = true;
                         $toUpd[$kDb] = $k;
                     }
                 } catch (Exception $ex) {
+                    
                 }
             }
             if ($flag === false) {

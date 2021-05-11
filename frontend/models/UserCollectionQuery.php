@@ -41,6 +41,16 @@ class UserCollectionQuery extends UserCollection
     }
 
     /**
+     * Return true if already exists a collection with the given name
+     * @param int $userId
+     * @param string $name
+     * @return bool
+     */
+    static public function isUserCollectionNameExists(int $userId, string $name): bool {
+        return !parent::find()->where(['user_id' => $userId, 'name' => $name])->limit(1)->select('id')->one() ? false : true;
+    }
+
+    /**
      * {@inheritdoc}
      * @return UserCollection[]|array
      */
