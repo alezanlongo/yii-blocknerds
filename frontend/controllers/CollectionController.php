@@ -81,7 +81,7 @@ class CollectionController extends Controller
         $model = User::findIdentity(Yii::$app->getUser()->getId());
         $modelCollectionForm = new UserCollectionForm();
 
-        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->createCollection($model)) {
+        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->validate() && $modelCollectionForm->createCollection($model)) {
             return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
         }
 
@@ -103,7 +103,7 @@ class CollectionController extends Controller
             throw new NotFoundHttpException('collection not forund');
         }
         $modelCollectionForm = new UserCollectionForm($model);
-        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->updateCollection()) {
+        if ($modelCollectionForm->load(Yii::$app->request->post()) && $modelCollectionForm->validate() && $modelCollectionForm->updateCollection()) {
             return $this->redirect(['view', 'id' => $modelCollectionForm->id]);
         }
 

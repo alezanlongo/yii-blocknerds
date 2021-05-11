@@ -2,5 +2,11 @@ suite_namespace: frontend\tests\functional
 actor: FunctionalTester
 modules:
     enabled:
-        - Filesystem
-        - Yii2
+       - Filesystem
+       - Yii2
+#           part: [orm, fixtures] # allow to use AR methods
+#           cleanup: false # don't wrap test in transaction
+#           entryScript: index-test.php
+#       - WebDriver:
+#            url: http://selenium-hub:4444/
+#            browser: firefox

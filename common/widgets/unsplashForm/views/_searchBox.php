@@ -1,5 +1,7 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var $this View */
@@ -7,10 +9,11 @@ use yii\web\View;
 $this->registerJs(<<<JS
        
               $("#sch-img").on('click',function(e){
-        var keyword = $(e.target).prev("input").val()
+              e.preventDefault();
+        var keyword = $('input[name="search"]').val()
         $.ajax({
         JS .
-        'url:"' . yii\helpers\Url::to(['collection/lookup']) . '",' .
+        'url:"' . Url::to(['collection/lookup']) . '",' .
         <<<JS
         method: "post",
         data: {keyword: keyword},
@@ -58,13 +61,14 @@ JS, View::POS_READY);
 ?>
 
 
-
 <div class="col-12">
+    <?php $form = ActiveForm::begin(['options' => ['id' => 'unsplash-search-form']]); ?>
     <div class="form-group" style="padding: 10px; display: inline-block; width: 100%">
         <label>Image Search</label>
         <input type="text" name="search" />
         <button type="submit" class="btn btn-success" id="sch-img">search</button>
     </div>
+    <?php $form = ActiveForm::end(); ?>
     <div class="content">
         <ul class="thumbnails" id="imgp">
         </ul>

@@ -10,9 +10,6 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'User Collections', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-
-//yii\helpers\VarDumper::dump($model->getUserCollectionImage()->asArray()->all(), 10, true);
-//die;
 ?>
 <div class="user-collection-view">
 
@@ -32,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <div class="row">
         <?php
-        foreach ($model->getUserCollectionImage()->asArray()->limit(10)->all() as $k => $v):
+        foreach ($model->getUserCollectionImage()->orderBy('position','asc')->asArray()->limit(20)->all() as $k => $v):
             $imgs[] = '/userimages/' . $v['image_file'];
             ?>
             <div class="card " style="width:200px; margin:10px 0 0 10px" onclick="currentSlide(<?= $k + 1 ?>)">

@@ -10,7 +10,7 @@ use yii\bootstrap4\ActiveForm;
 
 <div class="user-collection-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'collection-form']); ?>
     <?= $form->field($model, 'collection')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'name')->textInput() ?>
     <div class="form-group">
