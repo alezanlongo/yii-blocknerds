@@ -63,10 +63,10 @@ class ImageStorageComponent extends Component
     /**
      * 
      * @param string type $filename
-     * @param string type $asResource
+     * @param boolean $asResource
      * @return boolean
      */
-    public function getImage($filename, $asResource = true) {
+    public function getImage($filename, bool $asResource = true) {
         if (!$this->fileImageExists($filename)) {
             return false;
         }

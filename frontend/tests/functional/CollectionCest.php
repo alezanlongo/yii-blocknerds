@@ -55,6 +55,7 @@ class CollectionViewCest
         $I->amOnPage('collection/index');
         $I->seeLink('Create User Collection');
         $I->see('User Collections', 'h1');
+        $I->see('Showing 1-4 of 4 items.');
     }
 
     public function createCollection(FunctionalTester $I) {
@@ -74,6 +75,16 @@ class CollectionViewCest
         ]);
         $I->seeLink('Update');
         $I->seeLink('Delete');
+    }
+
+    public function viewCollection(FunctionalTester $I) {
+        $I->amOnPage('collection/view?id=1');
+        $I->see('test 1', 'h1');
+        $I->seeElement('div.user-collection-view');
+        $I->seeElement('div.card');
+        $I->seeElement('img.card-img-top');
+        $I->seeElement('div#myModal');
+        $I->seeElement('div#myModal .modal-content img');
     }
 
     public function createCollectionWithEmptyForm(FunctionalTester $I) {

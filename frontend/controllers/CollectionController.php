@@ -146,8 +146,7 @@ class CollectionController extends Controller
             Yii::$app->imageStorage->deleteImage($v['image_file']);
         }
         $model->delete();
-        Yii::$app->session->setFlash('success', "Collection {$id
-                } was deleted");
+        Yii::$app->session->setFlash('success', "Collection {$id} was deleted");
         return $this->redirect(['index']);
     }
 
